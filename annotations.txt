@@ -2,4 +2,4 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
-262. Configurações iniciais do Next.js e NestJS
+263. Página e componente de formulário para criação do usuário
