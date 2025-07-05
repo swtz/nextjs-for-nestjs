@@ -3,3 +3,13 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
 263. Página e componente de formulário para criação do usuário
+
+Alguns passos que observei o coach-Luiz comentar:
+
+-> criar a rota
+-> criar o componente de formulário
+-> desenvolver esse componente possuindo os campos que enviam as informações para o backend e também
+   alguns campos que pode ser úteis para o usuário apenas no frontend
+-> criar a server-action que receberá os dados do form
+-> validar os campos usando alguma ferramenta de validação como o Zod
+-> após serem feitas as validações no frontend, chamar o backend usando a FetchAPI
