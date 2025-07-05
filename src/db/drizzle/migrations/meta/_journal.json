@@ -1,0 +1,13 @@
+{
+  "version": "7",
+  "dialect": "sqlite",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "6",
+      "when": 1747397970474,
+      "tag": "0000_next_maginty",
+      "breakpoints": true
+    }
+  ]
+}
