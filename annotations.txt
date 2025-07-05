@@ -3,3 +3,11 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
 263. Página e componente de formulário para criação do usuário
+
+Esse formulário terá algumas camadas de segurança:
+
+1 → validação própria do HTML;
+2 → validação que ocorrerá na server-action;
+3 → validação do corpo da requisição pelo backend.
+
+Somente depois disso é que os dados serão salvos na base de dados.
