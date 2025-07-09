@@ -5,6 +5,7 @@ import {
   PublicUserDto,
   PublicUserSchema,
 } from '@/lib/user/schemas';
+import { asyncDelay } from '@/utils/async-delay';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 
 type CreateUserActionState = {
@@ -17,6 +18,8 @@ export async function createUserAction(
   prevState: CreateUserActionState,
   formData: FormData,
 ): Promise<CreateUserActionState> {
+  await asyncDelay(2000);
+
   if (!(formData instanceof FormData)) {
     return {
       user: prevState.user,
