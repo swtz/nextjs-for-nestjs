@@ -38,7 +38,7 @@ export function CreateUserForm() {
           labelText='Nome'
           placeholder='Digite seu nome'
           disabled={isPending}
-          defaultValue={''}
+          defaultValue={state.user.name}
           required
         />
         <InputText
@@ -47,7 +47,7 @@ export function CreateUserForm() {
           labelText='E-mail'
           placeholder='Digite seu e-mail'
           disabled={isPending}
-          defaultValue={''}
+          defaultValue={state.user.email}
           required
         />
         <InputText
