@@ -3,8 +3,3 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
 264. Validação dos dados com Zod e Server Action para criação do usuário no NestJs
-
-Assim como foi criado um DTO para criação e atualização de Posts, também será criado
-DTOs para as operações relacionadas ao envio dos dados da Entidade User.
-Será usada a biblioteca 'Zod', pois ela permite inferir o tipo e criar tipos baseados em
-seus 'schemas'.
