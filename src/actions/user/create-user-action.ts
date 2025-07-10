@@ -5,6 +5,7 @@ import {
   PublicUserDto,
   PublicUserSchema,
 } from '@/lib/user/schemas';
+import { apiRequest } from '@/utils/api-request';
 import { asyncDelay } from '@/utils/async-delay';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 
@@ -39,5 +40,11 @@ export async function createUserAction(
     };
   }
 
-  // FETCH API
+  const createResponse = await apiRequest<PublicUserDto>('/user', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(parsedFormData.data),
+  });
 }
