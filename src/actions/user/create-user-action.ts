@@ -47,4 +47,12 @@ export async function createUserAction(
     },
     body: JSON.stringify(parsedFormData.data),
   });
+
+  if (!createResponse.success) {
+    return {
+      user: PublicUserSchema.parse(formObj),
+      errors: createResponse.errors,
+      success: createResponse.success,
+    };
+  }
 }

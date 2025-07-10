@@ -3,3 +3,46 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
 266. Função para facilitar o uso da Fetch API com tipagem forte do TypeScript
+
+Observações do tipo criado 'ApiRequest<T>':
+
+IMPLEMENTATION ##############################################################
+
+type ApiRequestError = {
+  errors: string[]; <-----
+  success: false;
+  status: number;
+};
+
+type ApiRequestSuccess<T> = {
+  data: T; <-----
+  success: true;
+  status: number;
+};
+
+export type ApiRequest<T> = ApiRequestError | ApiRequestSuccess<T>; <-----
+
+USE CASE ##############################################################
+
+const createResponse = await apiRequest<PublicUserDto>('/user', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(parsedFormData.data),
+});
+
+if (!createResponse.success) { <-----
+  return {
+    user: PublicUserSchema.parse(formObj),
+    errors: createResponse.errors, <-----
+    success: createResponse.success,
+  };
+}
+
+Bem, graças a checagem `!createResponse.success` o TypeScript é inteligente o suficiente para saber
+que o desenvolvedor está se referindo ao tipo 'ApiRequestError' porque é ele quem possui a o valor da
+propriedade 'success' como 'false'.
+
+Assim, após essa checagem é possível usar a mesma variável 'createResponse' para obter os dados
+da propriedade 'data' que possui o TIPO GENÉRICO <T>.
