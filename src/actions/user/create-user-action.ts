@@ -40,10 +40,30 @@ export async function createUserAction(
   }
 
   // FETCH API
+  // const apiUrl = process.env.API_URL || 'http://locahost:3001';
+  const apiUrl = 'http://locahos:3001';
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(parsedFormData.data),
+    });
+  } catch (e) {
+    console.log(e);
+
+    return {
+      user: PublicUserSchema.parse(formObj),
+      errors: ['Falha ao conectar-se ao servidor'],
+      success: false,
+    };
+  }
 
   return {
-    user: prevState.user,
-    errors: [],
+    user: PublicUserSchema.parse(formObj),
+    errors: ['Success'],
     success: true,
   };
 }
