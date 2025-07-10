@@ -2,4 +2,4 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
-266. Função para facilitar o uso da Fetch API com tipagem forte do TypeScript
+267. Autenticação com cookie e JWT: Migrando Login do Next.js para o NestJS
