@@ -3,9 +3,3 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
 265. Usando a Fetch API do Next.js para enviar requisições para o NestJS em JSON
-
-Até o momento, na server-action createUserAction(), o erro lançado pela
-FetchAPI foi tratado, não comprometendo o funcionamento da aplicação. Achei isso bem interessante,
-pois ficou evidente a importância de tratar uma exceção (e de se fazer testes para descobri-las), pois
-dentro do corpo do bloco 'catch', pode ser retornado o objeto que entregará um array contendo especificamente
-o erro que será exibido pelo Frontend.

@@ -40,17 +40,34 @@ export async function createUserAction(
   }
 
   // FETCH API
-  // const apiUrl = process.env.API_URL || 'http://locahost:3001';
-  const apiUrl = 'http://locahos:3001';
+  const apiUrl = process.env.API_URL || 'http://locahost:3001';
 
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(`${apiUrl}/user`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json',
       },
       body: JSON.stringify(parsedFormData.data),
     });
+
+    const json = await response.json();
+
+    if (!response.ok) {
+      console.log(json);
+      return {
+        user: PublicUserSchema.parse(formObj),
+        errors: json.message,
+        success: false,
+      };
+    }
+
+    console.log(json);
+    return {
+      user: PublicUserSchema.parse(formObj),
+      errors: ['Success'],
+      success: true,
+    };
   } catch (e) {
     console.log(e);
 
@@ -60,10 +77,4 @@ export async function createUserAction(
       success: false,
     };
   }
-
-  return {
-    user: PublicUserSchema.parse(formObj),
-    errors: ['Success'],
-    success: true,
-  };
 }
