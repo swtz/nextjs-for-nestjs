@@ -31,5 +31,19 @@ export async function apiRequest<T>(
         status: res.status,
       };
     }
-  } catch (err) {}
+
+    return {
+      success: true,
+      data: json,
+      status: res.status,
+    };
+  } catch (err) {
+    console.log(err);
+
+    return {
+      errors: ['Aconteceu algo inesperado ao se comunicar com o servidor'],
+      success: false,
+      status: 500,
+    };
+  }
 }
