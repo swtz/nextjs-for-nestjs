@@ -1,6 +1,7 @@
 'use server';
 
 import { LoginSchema } from '@/lib/login/schemas';
+import { apiRequest } from '@/utils/api-request';
 import { asyncDelay } from '@/utils/async-delay';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 
@@ -42,9 +43,29 @@ export async function loginAction(
     };
   }
 
+  const loginResponse = await apiRequest<{ accessToken: string }>(
+    '/auth/login',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(parsedFormData.data),
+    },
+  );
+
+  if (!loginResponse.success) {
+    return {
+      email: formEmail,
+      errors: loginResponse.errors,
+    };
+  }
+
+  console.log(loginResponse.data);
+
   return {
     email: formEmail,
-    errors: [],
+    errors: ['Success'],
   };
 
   // await createLoginSession(email);
