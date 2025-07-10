@@ -12,10 +12,14 @@ type ApiRequestSuccess<T> = {
 
 export type ApiRequest<T> = ApiRequestError | ApiRequestSuccess<T>;
 
+export const apiUrl = process.env.API_URL || 'http://locahost:3001';
+
 export async function apiRequest<T>(
-  url: string,
+  path: string,
   options?: RequestInit,
 ): Promise<ApiRequest<T>> {
+  const url = `${apiUrl}${path}`;
+
   try {
     const res = await fetch(url, options);
     const json = await res.json().catch(() => null);
