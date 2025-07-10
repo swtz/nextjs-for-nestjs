@@ -1,12 +1,14 @@
 'use client';
 
+import { useActionState, useEffect } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
+import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import { LogInIcon } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { InputText } from '@/components/InputText';
-import { useActionState, useEffect } from 'react';
 import { loginAction } from '@/actions/login/login-action';
-import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 export function LoginForm() {
   const initialState = {
@@ -15,6 +17,9 @@ export function LoginForm() {
   };
 
   const [state, action, isPending] = useActionState(loginAction, initialState);
+  const searchParams = useSearchParams();
+  const created = searchParams.get('created');
+  const router = useRouter();
 
   useEffect(() => {
     if (state.error) {
@@ -22,6 +27,16 @@ export function LoginForm() {
       toast.error(state.error);
     }
   }, [state]);
+
+  useEffect(() => {
+    if (created === '1') {
+      toast.dismiss();
+      toast.success('Usuário criado com sucesso!');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('created');
+      router.replace(url.toString());
+    }
+  }, [created, router]);
 
   return (
     <div
@@ -52,6 +67,10 @@ export function LoginForm() {
           <LogInIcon />
           Fazer login
         </Button>
+
+        <p className='text-sm/tight'>
+          <Link href='/user/new'>Criar minha conta</Link>
+        </p>
 
         {!!state.error && <p className='text-red-600'>{state.error}</p>}
       </form>

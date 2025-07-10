@@ -1,5 +1,6 @@
 'use server';
 
+import { redirect } from 'next/navigation';
 import {
   CreateUserSchema,
   PublicUserDto,
@@ -55,4 +56,6 @@ export async function createUserAction(
       success: createResponse.success,
     };
   }
+
+  redirect('/login?created=1');
 }
