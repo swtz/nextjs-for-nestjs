@@ -2,18 +2,18 @@
 
 import { useActionState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import Link from 'next/link';
 import { toast } from 'react-toastify';
 import clsx from 'clsx';
 import { LogInIcon } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { InputText } from '@/components/InputText';
 import { loginAction } from '@/actions/login/login-action';
-import Link from 'next/link';
 
 export function LoginForm() {
   const initialState = {
-    username: '',
-    error: '',
+    email: '',
+    errors: [],
   };
 
   const [state, action, isPending] = useActionState(loginAction, initialState);
@@ -22,9 +22,9 @@ export function LoginForm() {
   const router = useRouter();
 
   useEffect(() => {
-    if (state.error) {
+    if (state.errors.length > 0) {
       toast.dismiss();
-      toast.error(state.error);
+      state.errors.forEach(error => toast.error(error));
     }
   }, [state]);
 
@@ -47,12 +47,13 @@ export function LoginForm() {
     >
       <form action={action} className='flex-1 flex flex-col gap-6'>
         <InputText
-          type='text'
-          name='username'
-          labelText='Usuário'
-          placeholder='Digite seu usuário'
+          type='email'
+          name='email'
+          labelText='E-mail'
+          placeholder='Digite seu e-mail'
           disabled={isPending}
-          defaultValue={state.username}
+          defaultValue={state.email}
+          required
         />
 
         <InputText
@@ -61,6 +62,7 @@ export function LoginForm() {
           labelText='Senha'
           placeholder='Digite sua senha'
           disabled={isPending}
+          required
         />
 
         <Button disabled={isPending} type='submit' className='mt-4'>
@@ -72,7 +74,12 @@ export function LoginForm() {
           <Link href='/user/new'>Criar minha conta</Link>
         </p>
 
-        {!!state.error && <p className='text-red-600'>{state.error}</p>}
+        {!!(state.errors.length > 0) &&
+          state.errors.map(error => (
+            <p key={error} className='text-red-600'>
+              {error}
+            </p>
+          ))}
       </form>
     </div>
   );

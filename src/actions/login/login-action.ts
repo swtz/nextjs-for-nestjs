@@ -1,12 +1,12 @@
 'use server';
 
-import { createLoginSession, verifyPassword } from '@/lib/login/manage-login';
+import { LoginSchema } from '@/lib/login/schemas';
 import { asyncDelay } from '@/utils/async-delay';
-import { redirect } from 'next/navigation';
+import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 
 type LoginActionState = {
-  username: string;
-  error: string;
+  email: string;
+  errors: string[];
 };
 
 export async function loginAction(
@@ -17,8 +17,8 @@ export async function loginAction(
 
   if (!allowLogin) {
     return {
-      username: '',
-      error: 'Login não permitido.',
+      email: '',
+      errors: ['Login não permitido.'],
     };
   }
 
@@ -26,34 +26,27 @@ export async function loginAction(
 
   if (!(formData instanceof FormData)) {
     return {
-      username: '',
-      error: 'Dados inválidos',
+      email: '',
+      errors: ['Dados inválidos'],
     };
   }
 
-  const username = formData.get('username')?.toString().trim() || '';
-  const password = formData.get('password')?.toString().trim() || '';
+  const formObj = Object.fromEntries(formData.entries());
+  const formEmail = formObj?.email?.toString() || '';
+  const parsedFormData = LoginSchema.safeParse(formObj);
 
-  if (!username || !password) {
+  if (!parsedFormData.success) {
     return {
-      username,
-      error: 'Digite o usuário e a senha',
+      email: formEmail,
+      errors: getZodErrorMessages(parsedFormData.error.format()),
     };
   }
 
-  const isUsernameValid = username === process.env.LOGIN_USER;
-  const isPasswordValid = await verifyPassword(
-    password,
-    process.env.LOGIN_PASS || '',
-  );
+  return {
+    email: formEmail,
+    errors: [],
+  };
 
-  if (!isUsernameValid || !isPasswordValid) {
-    return {
-      username,
-      error: 'Usuário ou senha inválidos',
-    };
-  }
-
-  await createLoginSession(username);
-  redirect('/admin/post');
+  // await createLoginSession(email);
+  // redirect('/admin/post');
 }
