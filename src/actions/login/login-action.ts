@@ -1,5 +1,7 @@
 'use server';
 
+import { redirect } from 'next/navigation';
+import { createLoginSessionFromApi } from '@/lib/login/manage-login';
 import { LoginSchema } from '@/lib/login/schemas';
 import { apiRequest } from '@/utils/api-request';
 import { asyncDelay } from '@/utils/async-delay';
@@ -61,13 +63,6 @@ export async function loginAction(
     };
   }
 
-  console.log(loginResponse.data);
-
-  return {
-    email: formEmail,
-    errors: ['Success'],
-  };
-
-  // await createLoginSession(email);
-  // redirect('/admin/post');
+  await createLoginSessionFromApi(loginResponse.data.accessToken);
+  redirect('/admin/post');
 }
