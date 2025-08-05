@@ -1,6 +1,6 @@
 'use server';
 
-import { verifyLoginSession } from '@/lib/login/manage-login';
+import { getLoginSessionForApi } from '@/lib/login/manage-login';
 import { mkdir, writeFile } from 'fs/promises';
 import { extname } from 'path';
 
@@ -22,7 +22,7 @@ export async function uploadImageAction(
 ): Promise<UploadImageActionResult> {
   const makeResult = ({ url = '', error = '' }) => ({ url, error });
 
-  const isAuthenticated = await verifyLoginSession();
+  const isAuthenticated = await getLoginSessionForApi();
 
   if (!isAuthenticated) {
     return makeResult({ error: 'Faça login novamente para enviar a imagem.' });

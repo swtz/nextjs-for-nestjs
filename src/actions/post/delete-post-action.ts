@@ -3,10 +3,10 @@
 import { revalidateTag } from 'next/cache';
 import { postRepository } from '@/repositories/post';
 import { PostModel } from '@/models/post/post-model';
-import { verifyLoginSession } from '@/lib/login/manage-login';
+import { getLoginSessionForApi } from '@/lib/login/manage-login';
 
 export async function deletePostAction(id: string) {
-  const isAuthenticated = await verifyLoginSession();
+  const isAuthenticated = await getLoginSessionForApi();
 
   if (!isAuthenticated) {
     return {

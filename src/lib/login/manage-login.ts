@@ -40,7 +40,7 @@ export async function getLoginSessionForApi() {
   return jwt;
 }
 
-export async function requireLoginSessionOrRedirectForApi() {
+export async function requireLoginSessionForApiOrRedirect() {
   const isAuthenticated = await getLoginSessionForApi();
 
   if (!isAuthenticated) {

@@ -11,7 +11,7 @@ import { PostUpdateSchema } from '@/lib/post/validations';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { asyncDelay } from '@/utils/async-delay';
 import { makeRandomString } from '@/utils/make-random-string';
-import { verifyLoginSession } from '@/lib/login/manage-login';
+import { getLoginSessionForApi } from '@/lib/login/manage-login';
 
 type UpdateActionState = {
   formState: PublicPost;
@@ -23,7 +23,7 @@ export async function updatePostAction(
   prevState: UpdateActionState,
   formData: FormData,
 ): Promise<UpdateActionState> {
-  const isAuthenticated = await verifyLoginSession();
+  const isAuthenticated = await getLoginSessionForApi();
 
   await asyncDelay(3000);
 

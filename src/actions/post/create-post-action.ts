@@ -9,7 +9,7 @@ import { makeSlugFromText } from '@/utils/make-slug-from-text';
 import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { postRepository } from '@/repositories/post';
-import { verifyLoginSession } from '@/lib/login/manage-login';
+import { getLoginSessionForApi } from '@/lib/login/manage-login';
 
 type CreateActionState = {
   formState: PublicPost;
@@ -21,7 +21,7 @@ export async function createPostAction(
   prevState: CreateActionState,
   formData: FormData,
 ): Promise<CreateActionState> {
-  const isAuthenticated = await verifyLoginSession();
+  const isAuthenticated = await getLoginSessionForApi();
 
   if (!(formData instanceof FormData)) {
     return {
