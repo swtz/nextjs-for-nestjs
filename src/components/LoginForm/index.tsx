@@ -19,6 +19,7 @@ export function LoginForm() {
   const [state, action, isPending] = useActionState(loginAction, initialState);
   const searchParams = useSearchParams();
   const created = searchParams.get('created');
+  const userChanged = searchParams.get('userChanged');
   const router = useRouter();
 
   useEffect(() => {
@@ -36,7 +37,15 @@ export function LoginForm() {
       url.searchParams.delete('created');
       router.replace(url.toString());
     }
-  }, [created, router]);
+
+    if (userChanged === '1') {
+      toast.dismiss();
+      toast.success('Usuário alterado com sucesso! Faça login novamente.');
+      const url = new URL(window.location.href);
+      url.searchParams.delete('userChanged');
+      router.replace(url.toString());
+    }
+  }, [userChanged, created, router]);
 
   return (
     <div
