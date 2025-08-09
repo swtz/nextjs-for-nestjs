@@ -2,4 +2,12 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
-269. Corrigindo o redirecionamento da página quando usuário está logado
+270. Função para requisições autenticadas no Next.js (AuthenticatedApiRequest)
+
+Essa função tem o objetivo de afunilar as chamadas para a API, para que todas elas
+passem por um processo de autenticação. Essa função faz uso da função 'apiRequest<T>()'
+adicionando checagens quanto ao JWT que está no cookie criado pela server action responsável
+pelo login do usuário.
+
+Essa é uma boa prática que o Next.js recomenda quando se acessam recursos do sistema que exigem
+a autenticação do usuário.
