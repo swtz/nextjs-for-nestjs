@@ -4,14 +4,5 @@ Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação 
 
 271. Iniciando a migração lista de posts da admin para buscar dados do NestJS
 
-Problema que será resolvido no decorrer das aulas:
-
-Existe o tipo PostModel que está sendo usado em diversas partes da aplicação. O campo
-'author' desse tipo é uma string. Entretanto, a API desenvolvida com NestJS entrega
-um objeto que contém os dados desse 'author'. Assim, caso seja feita alguma alteração
-nesse tipo, a aplicação para de funcionar sem falar em algumas funções que usam esse tipo
-para criar tipos parciais para as server actions (como um PostModel vazio, por exemplo).
-
-Assim, o coach Luiz vai criar arquivos separados e vai substituindo pouco a pouco para
-colaborar com o aprendizado. Também será usado o Zod para criar esses tipos parciais que
-são úteis para as serve actions que precisam de um 'initialState' vazio.
+Obs.: o campo 'author' do 'post' será preenchido pelo NestJS (originalmente, o criador
+do post informava ele).
