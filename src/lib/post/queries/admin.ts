@@ -24,3 +24,17 @@ export const findPostByIdFromApiAdmin = cache(async (id: string) => {
 export const findAllPostsAdmin = cache(async () => {
   return postRepository.findAll();
 });
+
+export const findAllPostsFromApiAdmin = cache(async () => {
+  const postsResponse = await authenticatedApiRequest<PostModelFromApi[]>(
+    `/post/me/`,
+    {
+      headers: {
+        'Content-type': 'application/json',
+      },
+      cache: 'no-store',
+    },
+  );
+
+  return postsResponse;
+});
