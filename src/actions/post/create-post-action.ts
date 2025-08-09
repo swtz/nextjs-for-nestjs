@@ -2,7 +2,7 @@
 
 import { v4 as uuidV4 } from 'uuid';
 import { makePartialPublicPost, PublicPost } from '@/dto/post/dto';
-import { PostCreateSchema } from '@/lib/post/validations';
+import { PostCreateSchema } from '@/lib/post/schemas';
 import { PostModel } from '@/models/post/post-model';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { makeSlugFromText } from '@/utils/make-slug-from-text';

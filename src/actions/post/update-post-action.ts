@@ -7,7 +7,7 @@ import {
   makePublicPostFromDb,
   PublicPost,
 } from '@/dto/post/dto';
-import { PostUpdateSchema } from '@/lib/post/validations';
+import { PostUpdateSchema } from '@/lib/post/schemas';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { asyncDelay } from '@/utils/async-delay';
 import { makeRandomString } from '@/utils/make-random-string';
