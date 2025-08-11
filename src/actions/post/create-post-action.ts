@@ -9,6 +9,7 @@ import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { revalidateTag } from 'next/cache';
 import { redirect } from 'next/navigation';
 import { getLoginSessionForApi } from '@/lib/login/manage-login';
+import { authenticatedApiRequest } from '@/utils/authenticated-api-request';
 
 type CreatePostActionState = {
   formState: PublicPostForApiDto;
@@ -47,8 +48,29 @@ export async function createPostAction(
     };
   }
 
-  const validPostData = zodParsedObject.data;
+  const newPost = zodParsedObject.data;
 
-  // revalidateTag('posts');
-  // redirect(`/admin/post/${newPost.id}?created=1`);
+  const createPostResponse = await authenticatedApiRequest<PublicPostForApiDto>(
+    '/post/me',
+    {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      cache: 'no-store',
+      body: JSON.stringify(newPost),
+    },
+  );
+
+  if (!createPostResponse.success) {
+    return {
+      formState: PublicPostForApiSchema.parse(formDataToObject),
+      errors: createPostResponse.errors,
+    };
+  }
+
+  const createdPost = createPostResponse.data;
+
+  revalidateTag('posts');
+  redirect(`/admin/post/${createdPost.id}?created=1`);
 }
