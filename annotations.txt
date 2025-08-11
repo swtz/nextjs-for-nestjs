@@ -2,4 +2,4 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
-271. Iniciando a migração lista de posts da admin para buscar dados do NestJS
+272. CRUD completo do Post com requisição autenticada com Authorization JWT Token

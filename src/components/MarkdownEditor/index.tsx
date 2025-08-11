@@ -54,6 +54,7 @@ export function MarkdownEditor({
           rehypePlugins: [[rehypeSanitize]], // plug-ins para o modo 'preview' desse componente
           remarkPlugins: [[remarkGfm]], // o modo 'preview' pode abrir vulnerabilidade para ataques XSS
         }}
+        data-color-mode='light'
       />
     </div>
   );
