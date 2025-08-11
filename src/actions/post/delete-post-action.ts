@@ -1,9 +1,9 @@
 'use server';
 
 import { revalidateTag } from 'next/cache';
-import { postRepository } from '@/repositories/post';
-import { PostModel } from '@/models/post/post-model';
 import { getLoginSessionForApi } from '@/lib/login/manage-login';
+import { authenticatedApiRequest } from '@/utils/authenticated-api-request';
+import { PublicPostForApiDto } from '@/lib/post/schemas';
 
 export async function deletePostAction(id: string) {
   const isAuthenticated = await getLoginSessionForApi();
@@ -20,23 +20,21 @@ export async function deletePostAction(id: string) {
     };
   }
 
-  let post: PostModel;
-  try {
-    post = await postRepository.delete(id);
-  } catch (e: unknown) {
-    if (e instanceof Error) {
-      return {
-        error: e.message,
-      };
-    }
+  const deletePostResponse = await authenticatedApiRequest<PublicPostForApiDto>(
+    `/post/me/${id}`,
+    {
+      method: 'DELETE',
+    },
+  );
 
+  if (!deletePostResponse.success) {
     return {
-      error: 'Erro desconhecido',
+      error: 'Erro ao pagar o post',
     };
   }
 
   revalidateTag('posts');
-  revalidateTag(`post-${post.slug}`);
+  revalidateTag(`post-${deletePostResponse.data.slug}`);
 
   return {
     error: '',

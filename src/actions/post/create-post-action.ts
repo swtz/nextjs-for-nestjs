@@ -57,7 +57,6 @@ export async function createPostAction(
       headers: {
         'Content-type': 'application/json',
       },
-      cache: 'no-store',
       body: JSON.stringify(newPost),
     },
   );
