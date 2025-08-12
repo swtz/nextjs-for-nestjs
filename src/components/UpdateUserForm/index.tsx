@@ -1,15 +1,32 @@
 'use client';
 
+import { useState, useTransition } from 'react';
+import Link from 'next/link';
+import clsx from 'clsx';
 import { LockKeyholeIcon, OctagonXIcon, UserPenIcon } from 'lucide-react';
 import { Button } from '../Button';
 import { InputText } from '../InputText';
-import Link from 'next/link';
-import clsx from 'clsx';
-import { useState } from 'react';
 import { Dialog } from '../Dialog';
+import { asyncDelay } from '@/utils/async-delay';
 
 export function UpdateUserForm() {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
+  const [isTransitioning, startTransition] = useTransition();
+  const isElementsDisabled = isTransitioning;
+  const safetyDelay = 10000;
+
+  function showDeleteAccountDialog(
+    e: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
+  ) {
+    e.preventDefault();
+    setIsDialogVisible(true);
+
+    startTransition(async () => {
+      await asyncDelay(safetyDelay);
+    });
+  }
+
+  function handleDeleteUserAccount() {}
 
   return (
     <div
@@ -24,7 +41,7 @@ export function UpdateUserForm() {
           name='name'
           labelText='Nome'
           placeholder='Digite seu nome'
-          disabled={false}
+          disabled={isElementsDisabled}
           defaultValue={''}
         />
 
@@ -33,12 +50,12 @@ export function UpdateUserForm() {
           name='email'
           labelText='E-mail'
           placeholder='Digite seu e-mail'
-          disabled={false}
+          disabled={isElementsDisabled}
           defaultValue={''}
         />
 
         <div className='flex items-center justify-center mt-4'>
-          <Button type='submit' size='md' disabled={false}>
+          <Button type='submit' size='md' disabled={isElementsDisabled}>
             <UserPenIcon />
             Atualizar
           </Button>
@@ -62,7 +79,7 @@ export function UpdateUserForm() {
               'text-red-600 hover:text-red-700',
             )}
             href='#'
-            onClick={() => {}}
+            onClick={showDeleteAccountDialog}
           >
             <OctagonXIcon />
             Apagar conta
@@ -79,9 +96,9 @@ export function UpdateUserForm() {
             <b>Cancelar</b> para fechar essa janela.
           </p>
         }
-        // disabled={isPending || isTransitionRunning}
+        disabled={isElementsDisabled}
         onCancel={() => setIsDialogVisible(false)}
-        // onConfirm={handleDeleteUserAccount}
+        onConfirm={handleDeleteUserAccount}
         isVisible={isDialogVisible}
         title='Apagar meu usuário'
       />
