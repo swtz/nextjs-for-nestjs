@@ -1,5 +1,6 @@
-import { findPublicPostBySlugCached } from '@/lib/post/queries/public';
+import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import { findPublicPostBySlugFromApiCached } from '@/lib/post/queries/public';
 import { PostHeading } from '../PostHeading';
 import { PostDate } from '../PostDate';
 import { SafeMarkdown } from '../SafeMarkdown';
@@ -9,8 +10,14 @@ type SinglePostProps = {
 };
 
 export async function SinglePost({ slug }: SinglePostProps) {
-  const post = await findPublicPostBySlugCached(slug);
+  const postRes = await findPublicPostBySlugFromApiCached(slug);
   const postLink = `/post/${slug}`;
+
+  if (!postRes.success) {
+    notFound();
+  }
+
+  const post = postRes.data;
 
   return (
     <article className='mb-16'>
@@ -27,7 +34,7 @@ export async function SinglePost({ slug }: SinglePostProps) {
         <PostHeading url={postLink}>{post.title}</PostHeading>
 
         <p>
-          {post.author} | <PostDate dateTime={post.createdAt} />
+          {post.author.name} | <PostDate dateTime={post.createdAt} />
         </p>
       </header>
 
