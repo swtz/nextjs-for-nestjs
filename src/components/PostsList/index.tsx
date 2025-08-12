@@ -1,12 +1,20 @@
 import clsx from 'clsx';
 import { PostCoverImage } from '../PostCoverImage';
 import { PostSummary } from '../PostSummary';
-import { findAllPublicPostsCached } from '@/lib/post/queries/public';
+import { findAllPublicPostsFromApiCached } from '@/lib/post/queries/public';
 
 export async function PostsList() {
-  const posts = await findAllPublicPostsCached();
+  const postsRes = await findAllPublicPostsFromApiCached();
 
-  if (posts.length <= 1) return null;
+  if (!postsRes.success) {
+    return null;
+  }
+
+  const posts = postsRes.data;
+
+  if (posts.length <= 1) {
+    return null;
+  }
 
   return (
     <div
