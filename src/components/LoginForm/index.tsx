@@ -9,6 +9,7 @@ import { LogInIcon } from 'lucide-react';
 import { Button } from '@/components/Button';
 import { InputText } from '@/components/InputText';
 import { loginAction } from '@/actions/login/login-action';
+import { HoneypotInput } from '../HoneypotInput';
 
 export function LoginForm() {
   const initialState = {
@@ -73,6 +74,8 @@ export function LoginForm() {
           disabled={isPending}
           required
         />
+
+        <HoneypotInput />
 
         <Button disabled={isPending} type='submit' className='mt-4'>
           <LogInIcon />

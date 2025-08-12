@@ -4,8 +4,8 @@ import { redirect } from 'next/navigation';
 import { createLoginSessionFromApi } from '@/lib/login/manage-login';
 import { LoginSchema } from '@/lib/login/schemas';
 import { apiRequest } from '@/utils/api-request';
-import { asyncDelay } from '@/utils/async-delay';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
+import { verifyHoneypotInput } from '@/utils/verify-honeypot-input';
 
 type LoginActionState = {
   email: string;
@@ -25,7 +25,14 @@ export async function loginAction(
     };
   }
 
-  await asyncDelay(5000); // manter delay
+  const isBot = await verifyHoneypotInput(formData, 5000);
+
+  if (isBot) {
+    return {
+      email: '',
+      errors: ['nice try 👍🏽'],
+    };
+  }
 
   if (!(formData instanceof FormData)) {
     return {
