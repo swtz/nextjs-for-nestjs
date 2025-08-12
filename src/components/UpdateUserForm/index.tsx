@@ -4,11 +4,17 @@ import { LockKeyholeIcon, OctagonXIcon, UserPenIcon } from 'lucide-react';
 import { Button } from '../Button';
 import { InputText } from '../InputText';
 import Link from 'next/link';
+import clsx from 'clsx';
 
 export function UpdateUserForm() {
   return (
-    <div>
-      <form action={''}>
+    <div
+      className={clsx(
+        'flex items-center justify-center',
+        'text-center max-w-sm mt-16 mb-32 mx-auto',
+      )}
+    >
+      <form action={''} className='flex-1 flex flex-col gap-6'>
         <InputText
           type='text'
           name='name'
@@ -27,20 +33,33 @@ export function UpdateUserForm() {
           defaultValue={''}
         />
 
-        <div>
+        <div className='flex items-center justify-center mt-4'>
           <Button type='submit' size='md' disabled={false}>
             <UserPenIcon />
             Atualizar
           </Button>
         </div>
 
-        <div>
-          <Link href='/admin/user/password'>
+        <div className='flex gap-4 items-center justify-between mt-8'>
+          <Link
+            className={clsx(
+              'flex gap-2 items-center justify-center transition',
+              'hover:text-blue-600',
+            )}
+            href='/admin/user/password'
+          >
             <LockKeyholeIcon />
             Trocar senha
           </Link>
 
-          <Link href='#' onClick={() => {}}>
+          <Link
+            className={clsx(
+              'flex gap-2 items-center justify-center transition',
+              'text-red-600 hover:text-red-700',
+            )}
+            href='#'
+            onClick={() => {}}
+          >
             <OctagonXIcon />
             Apagar conta
           </Link>
