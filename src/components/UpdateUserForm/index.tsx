@@ -5,8 +5,12 @@ import { Button } from '../Button';
 import { InputText } from '../InputText';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { useState } from 'react';
+import { Dialog } from '../Dialog';
 
 export function UpdateUserForm() {
+  const [isDialogVisible, setIsDialogVisible] = useState(false);
+
   return (
     <div
       className={clsx(
@@ -65,6 +69,22 @@ export function UpdateUserForm() {
           </Link>
         </div>
       </form>
+
+      <Dialog
+        content={
+          <p>
+            Ao pagar meu usuário, meus dados e todos os meus posts também serão
+            excluídos. Essa ação é IRREVERSÍVEL. Em alguns segundos, os botões
+            serão liberados. Clique em <b>OK</b> para confirmar ou{' '}
+            <b>Cancelar</b> para fechar essa janela.
+          </p>
+        }
+        // disabled={isPending || isTransitionRunning}
+        onCancel={() => setIsDialogVisible(false)}
+        // onConfirm={handleDeleteUserAccount}
+        isVisible={isDialogVisible}
+        title='Apagar meu usuário'
+      />
     </div>
   );
 }
