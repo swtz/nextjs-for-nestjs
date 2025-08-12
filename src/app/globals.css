@@ -5,4 +5,10 @@
   --breakpoint-xs: 30rem;
 }
 
+@layer {
+  .niceInput {
+    @apply pointer-events-none absolute w-0 h-0 overflow-hidden opacity-0;
+  }
+}
+
 /* @custom-variant dark (&:where(.dark, .dark *)); */
