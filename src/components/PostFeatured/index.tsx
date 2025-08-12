@@ -1,19 +1,28 @@
 import clsx from 'clsx';
 import { PostCoverImage } from '../PostCoverImage';
 import { PostSummary } from '../PostSummary';
-import { findAllPublicPostsCached } from '@/lib/post/queries/public';
+import { findAllPublicPostsFromApiCached } from '@/lib/post/queries/public';
 import ErrorMessage from '../ErrorMessage';
 
 export async function PostFeatured() {
-  const posts = await findAllPublicPostsCached();
+  const postsRes = await findAllPublicPostsFromApiCached();
 
-  if (posts.length <= 0)
-    return (
-      <ErrorMessage
-        contentTitle='Ops!'
-        content='Ainda não criamos nenhum post 😅'
-      />
-    );
+  const noPostFound = (
+    <ErrorMessage
+      contentTitle='Ops!'
+      content='Ainda não criamos nenhum post 😅'
+    />
+  );
+
+  if (!postsRes.success) {
+    return noPostFound;
+  }
+
+  const posts = postsRes.data;
+
+  if (posts.length <= 0) {
+    return noPostFound;
+  }
 
   const post = posts[0];
   const postLink = `/post/${post.slug}`;
