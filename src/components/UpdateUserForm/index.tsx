@@ -8,8 +8,13 @@ import { Button } from '../Button';
 import { InputText } from '../InputText';
 import { Dialog } from '../Dialog';
 import { asyncDelay } from '@/utils/async-delay';
+import { PublicUserDto } from '@/lib/user/schemas';
 
-export function UpdateUserForm() {
+export type UpdateUserFormProps = {
+  user: PublicUserDto;
+};
+
+export function UpdateUserForm({ user }: UpdateUserFormProps) {
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [isTransitioning, startTransition] = useTransition();
   const isElementsDisabled = isTransitioning;

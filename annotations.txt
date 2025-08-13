@@ -2,4 +2,4 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
-277. Formulário de atualização do usuário + useTransition com Delay para ativar ações
+278. Server Action, formulário e componentes para atualização do usuário
