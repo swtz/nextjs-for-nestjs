@@ -12,7 +12,7 @@ export const findPostByIdFromApiAdmin = cache(async (id: string) => {
     `/post/me/${id}`,
     {
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
       },
       cache: 'no-store',
     },
@@ -30,7 +30,7 @@ export const findAllPostsFromApiAdmin = cache(async () => {
     `/post/me/`,
     {
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
       },
       cache: 'no-store',
     },

@@ -7,7 +7,9 @@ import {
   PublicUserSchema,
   UpdateUserSchema,
 } from '@/lib/user/schemas';
+import { authenticatedApiRequest } from '@/utils/authenticated-api-request';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
+import { redirect } from 'next/navigation';
 
 type UpdateUserActionState = {
   user: PublicUserDto;
@@ -49,4 +51,40 @@ export async function updateUserAction(
       success: false,
     };
   }
+
+  const updateResponse = await authenticatedApiRequest<PublicUserDto>(
+    '/user/me',
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(parsedFormData.data),
+    },
+  );
+
+  if (!updateResponse.success) {
+    return {
+      user: PublicUserSchema.parse(formObject),
+      errors: updateResponse.errors,
+      success: false,
+    };
+  }
+
+  if (user.email !== updateResponse.data.email) {
+    await deleteLoginSession();
+    redirect('/login?userChange=1');
+  }
+
+  // Isso aqui é a lista de posts
+  // Não vai atualizar o single post
+  // O nome de usuário (caso atualizado) só vai mudar
+  // após o revalidate por conta do cache → /lib/post/queries/public.ts
+  // revalidateTag('posts');
+
+  return {
+    user: PublicUserSchema.parse(updateResponse.data),
+    errors: [],
+    success: true,
+  };
 }

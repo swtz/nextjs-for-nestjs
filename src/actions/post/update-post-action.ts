@@ -66,7 +66,7 @@ export async function updatePostAction(
     {
       method: 'PATCH',
       headers: {
-        'Content-type': 'application/json',
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify(newPost),
     },
