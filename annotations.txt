@@ -3,3 +3,8 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
 278. Server Action, formulário e componentes para atualização do usuário
+
+→ Desafio: para exibição de mensagens de sucesso/erro em vários componentes,
+é repetido muitas vezes algumas instruções usando o hook 'useEffect'. Dessa forma,
+é possível fazer um custom hook para reutilizar ele em todos os locais que precisam
+dessas checagens do tipo de mensagem a ser exibido.

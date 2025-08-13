@@ -1,23 +1,31 @@
 'use client';
 
-import { useState, useTransition } from 'react';
+import { useActionState, useEffect, useState, useTransition } from 'react';
 import Link from 'next/link';
 import clsx from 'clsx';
+import { toast } from 'react-toastify';
 import { LockKeyholeIcon, OctagonXIcon, UserPenIcon } from 'lucide-react';
 import { Button } from '../Button';
 import { InputText } from '../InputText';
 import { Dialog } from '../Dialog';
 import { asyncDelay } from '@/utils/async-delay';
 import { PublicUserDto } from '@/lib/user/schemas';
+import { updateUserAction } from '@/actions/user/update-user-action';
 
 export type UpdateUserFormProps = {
   user: PublicUserDto;
 };
 
 export function UpdateUserForm({ user }: UpdateUserFormProps) {
+  const [state, action, isPending] = useActionState(updateUserAction, {
+    user,
+    errors: [],
+    success: false,
+  });
+
   const [isDialogVisible, setIsDialogVisible] = useState(false);
   const [isTransitioning, startTransition] = useTransition();
-  const isElementsDisabled = isTransitioning;
+  const isElementsDisabled = isTransitioning || isPending;
   const safetyDelay = 10000;
 
   function showDeleteAccountDialog(
@@ -31,6 +39,18 @@ export function UpdateUserForm({ user }: UpdateUserFormProps) {
     });
   }
 
+  useEffect(() => {
+    toast.dismiss();
+
+    if (state.errors.length > 0) {
+      state.errors.forEach(error => toast.error(error));
+    }
+
+    if (state.success) {
+      toast.success('Atualizado com sucesso');
+    }
+  }, [state]);
+
   function handleDeleteUserAccount() {}
 
   return (
@@ -40,14 +60,14 @@ export function UpdateUserForm({ user }: UpdateUserFormProps) {
         'text-center max-w-sm mt-16 mb-32 mx-auto',
       )}
     >
-      <form action={''} className='flex-1 flex flex-col gap-6'>
+      <form action={action} className='flex-1 flex flex-col gap-6'>
         <InputText
           type='text'
           name='name'
           labelText='Nome'
           placeholder='Digite seu nome'
           disabled={isElementsDisabled}
-          defaultValue={''}
+          defaultValue={state.user.name}
         />
 
         <InputText
@@ -56,7 +76,7 @@ export function UpdateUserForm({ user }: UpdateUserFormProps) {
           labelText='E-mail'
           placeholder='Digite seu e-mail'
           disabled={isElementsDisabled}
-          defaultValue={''}
+          defaultValue={state.user.email}
         />
 
         <div className='flex items-center justify-center mt-4'>

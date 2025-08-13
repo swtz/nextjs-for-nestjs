@@ -1,4 +1,4 @@
-'user server';
+'use server';
 
 import { deleteLoginSession } from '@/lib/login/manage-login';
 import { getPublicUserFromApi } from '@/lib/user/api/get-user';
@@ -73,7 +73,7 @@ export async function updateUserAction(
 
   if (user.email !== updateResponse.data.email) {
     await deleteLoginSession();
-    redirect('/login?userChange=1');
+    redirect('/login?userChanged=1');
   }
 
   // Isso aqui é a lista de posts
