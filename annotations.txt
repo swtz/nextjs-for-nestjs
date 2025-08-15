@@ -2,4 +2,4 @@ Curso de React JS 19 e Next.js 15 (atualizado para 2025)
 
 Seção 5: Next.js com API REST em NestJS - autenticação, consumo e mutação de dados
 
-279. Server Action para apagar conta de usuário + duplo diálogo de confirmação
+280. Formulário de atualização de senha do usuário
