@@ -43,7 +43,7 @@ export const findPublicPostBySlugCached = cache((slug: string) => {
 export const findPublicPostBySlugFromApiCached = cache(async (slug: string) => {
   const postsResponse = await apiRequest<PostModelFromApi>(`/post/${slug}`, {
     next: {
-      tags: [`posts-${slug}`],
+      tags: [`post-${slug}`],
       revalidate: 86400,
     },
   });
