@@ -11,6 +11,7 @@ import { Dialog } from '../Dialog';
 import { asyncDelay } from '@/utils/async-delay';
 import { PublicUserDto } from '@/lib/user/schemas';
 import { updateUserAction } from '@/actions/user/update-user-action';
+import { deleteUserAction } from '@/actions/user/delete-user-action';
 
 export type UpdateUserFormProps = {
   user: PublicUserDto;
@@ -39,6 +40,21 @@ export function UpdateUserForm({ user }: UpdateUserFormProps) {
     });
   }
 
+  function handleDeleteUserAccount() {
+    startTransition(async () => {
+      if (!confirm('Confirma só mais uma vez que quer continuar')) return;
+
+      const result = await deleteUserAction();
+
+      if (!result.success) {
+        toast.dismiss();
+        result.errors.forEach(error => toast.error(error));
+      }
+
+      setIsDialogVisible(false);
+    });
+  }
+
   useEffect(() => {
     toast.dismiss();
 
@@ -50,8 +66,6 @@ export function UpdateUserForm({ user }: UpdateUserFormProps) {
       toast.success('Atualizado com sucesso');
     }
   }, [state]);
-
-  function handleDeleteUserAccount() {}
 
   return (
     <div
