@@ -3,11 +3,17 @@
 import { InputText } from '@/components/InputText';
 import { Button } from '..';
 import { LockKeyholeIcon } from 'lucide-react';
+import clsx from 'clsx';
 
 export function UpdateUserPasswordForm() {
   return (
-    <div>
-      <form action={''}>
+    <div
+      className={clsx(
+        'flex items-center justify-center',
+        'text-center, max-w-sm m016 mb-32 mx-auto',
+      )}
+    >
+      <form action={''} className='flex-1 flex flex-col gap-6'>
         <InputText
           type='password'
           name='currentPassword'
@@ -35,7 +41,7 @@ export function UpdateUserPasswordForm() {
           defaultValue={''}
         />
 
-        <div>
+        <div className='flex items-center justify-center mt-4'>
           <Button size='md' disabled={false} type='submit'>
             <LockKeyholeIcon />
             Atualizar senha
