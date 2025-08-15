@@ -2,22 +2,18 @@
 
 import { redirect } from 'next/navigation';
 import { getPublicUserFromApi } from '@/lib/user/api/get-user';
-import {
-  PublicUserDto,
-  UpdatePasswordDto,
-  UpdatePasswordSchema,
-} from '@/lib/user/schemas';
+import { PublicUserDto, UpdatePasswordSchema } from '@/lib/user/schemas';
 import { getZodErrorMessages } from '@/utils/get-zod-error-messages';
 import { authenticatedApiRequest } from '@/utils/authenticated-api-request';
 import { deleteLoginSession } from '@/lib/login/manage-login';
 
 type UpdateUserPasswordActionState = {
   errors: string[];
-  success: false;
+  success: boolean;
 };
 
 export async function updateUserPasswordAction(
-  prevState: UpdatePasswordDto,
+  prevState: UpdateUserPasswordActionState,
   formData: FormData,
 ): Promise<UpdateUserPasswordActionState> {
   const user = await getPublicUserFromApi();
